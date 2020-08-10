@@ -63,8 +63,11 @@ export const AddMeasurementDialog: React.FC<Props> = ({
 
   const handleClose = () => {
     if (!loading) {
-      setMetrics(clearMetrics(metrics));
       close();
+      setMetrics(clearMetrics(metrics));
+      setFinalMeasurement(true);
+      setInfeasible(false);
+      setInfeasibleReason('');
     }
   };
 
@@ -100,10 +103,8 @@ export const AddMeasurementDialog: React.FC<Props> = ({
         })
       );
     }
-
     setLoading(false);
-    setMetrics(clearMetrics(metrics));
-    close();
+    handleClose();
   };
 
   return (

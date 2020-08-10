@@ -166,15 +166,17 @@ export const CreateTrial: React.FC<Props> = ({
   const [loading, setLoading] = React.useState(false);
   // Creates parameter default values of '' and setups input error handling
   // using the custom hook
-  const [map, setInput] = useErrorStateMap(
+  const [map, setInput, clearInputs] = useErrorStateMap(
     parameterSpecToInputsValues(studyConfig.parameters),
     parameterSpecToValidateInput(studyConfig.parameters)
   );
 
   const handleClose = () => {
     if (!loading) {
-      setMetrics(clearMetrics(metrics));
       onClose();
+      clearInputs();
+      setMetrics(clearMetrics(metrics));
+      setRequested(false);
     }
   };
 
@@ -211,8 +213,7 @@ export const CreateTrial: React.FC<Props> = ({
       );
     }
     setLoading(false);
-    setMetrics(clearMetrics(metrics));
-    onClose();
+    handleClose();
   };
 
   return (
